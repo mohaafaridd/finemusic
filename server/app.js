@@ -4,7 +4,7 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const sassMiddleware = require('node-sass-middleware');
-
+const hbs = require('hbs');
 const indexRouter = require('../routes');
 const defaultPath = path.join(__dirname, '..');
 const app = express();
@@ -27,6 +27,10 @@ app.use(sassMiddleware({
 app.use(express.static(path.join(defaultPath, 'public')));
 app.use('/js', express.static(path.join(defaultPath, 'node_modules', 'bootstrap', 'dist', 'js'))); // redirect bootstrap JS
 app.use('/js', express.static(path.join(defaultPath, 'node_modules', 'jquery', 'dist'))); // redirect JS jQuery
+
+hbs.registerHelper('getCurrentYear', () => {
+  return new Date().getFullYear();
+})
 
 // Routes
 app.use('/', indexRouter);

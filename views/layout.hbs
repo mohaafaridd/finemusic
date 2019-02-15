@@ -3,12 +3,14 @@
 
 <head>
   <title>{{title}}</title>
-  <link rel='stylesheet' href='/stylesheets/style.css' />
 
   {{#if index}}
   <link rel="stylesheet" href="/stylesheets/index.css">
   {{/if}}
 
+  {{#if results}}
+  <link rel="stylesheet" href="/stylesheets/results.css">
+  {{/if}}
 </head>
 
 <body class="container">
@@ -16,6 +18,10 @@
   <main>
     {{{body}}}
   </main>
+
+  <footer>
+    <p class="text-muted">Created by Mohammed Farid. Copyright {{getCurrentYear}} ♪</p>
+  </footer>
 
   <script src="/js/jquery.js"></script>
   <script src="/js/bootstrap.min.js"></script>

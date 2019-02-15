@@ -1,0 +1,35 @@
+<h1 class="title"><span>Fine</span><span>music</span></h1>
+
+<h2>Results</h2>
+<div>
+    {{#each people}}
+    <article class="row">
+
+        <div class="col-md-3 img-container bg-dark">
+            <img class="img-fluid" src="{{ picture }}" alt="{{ picture }} image">
+        </div>
+
+        <div class="col-md-9">
+            <div class="row info-container">
+
+                <div class="col-md-8 info">
+                    <h2>{{ name }}</h2>
+                    <p>{{bio}}</p>
+                </div>
+
+                <div class="col-md-4 songs-list">
+                    <h3>Top songs</h3>
+                    <ul class="list-group">
+                        {{#songs}}
+                        {{!-- <li class="list-group-item"><a href="{{link}}">{{title}}</a></li> --}}
+                        <a class="list-group-item" href="{{link}}">{{title}}</a>
+                        {{/songs}}
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+
+    </article>
+    {{/each}}
+</div>

@@ -1,4 +1,8 @@
 @import "node_modules/bootstrap/scss/bootstrap";
+
+@import 'node_modules/font-awesome/scss/font-awesome.scss';
+$fa-font-path: "../../node_modules/font-awesome/fonts/";
+
 @import url('https://fonts.googleapis.com/css?family=Open+Sans');
 @import url('https://fonts.googleapis.com/css?family=Caveat');
 
@@ -11,6 +15,33 @@ html, body {
     height: 100%;
 }
 
+body{
+    background-color: $background;
+    display: flex;
+    flex-direction: column;
+}
+
 *{
     font-family: 'Open Sans', sans-serif;
+
+}
+
+main{
+    width: 100%;
+}
+
+.title{
+    text-align: center;
+    span{
+        font-weight: bold;
+        font-family: 'Caveat', cursive;
+    }
+
+    span:nth-of-type(1){
+        color: $shade-1;
+    }
+    
+    span:nth-of-type(2){
+        color: $shade-2;
+    }
 }
