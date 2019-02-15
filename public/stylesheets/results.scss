@@ -1,14 +1,18 @@
 @import "./style.scss";
 
-*{
-    color: $background;
+h2{
+    font-family: 'Caveat', cursive;    
+    color: white;
 }
 
 article{
+    margin-top: 2rem;
     background-color: $shade-1;
     border-radius: 10px;
-
+    color: $background;
+    
     h2, h3{
+        color: inherit;
         font-weight: bold;
         font-family: 'Caveat', cursive;
     }
