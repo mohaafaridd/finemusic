@@ -1,0 +1,59 @@
+@import "./style.scss";
+
+main{
+    width: 100%;
+}
+
+body{
+    background-color: $background;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+form{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.title{
+    text-align: center;
+    span{
+        font-weight: normal;
+        font-family: 'Caveat', cursive;
+    }
+
+    span:nth-of-type(1){
+        color: $shade-1;
+    }
+    
+    span:nth-of-type(2){
+        color: $shade-2;
+    }
+}
+
+.custom-select{
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+.btn-container{
+    text-align: right;
+}
+
+.btn-custom
+{
+    @include button-variant($shade-1, $shade-1, $shade-1);
+    border-radius: 10px 0px 10px 10px !important;
+    color: $background;
+    font: inherit;
+    font-weight: bold;
+}
+
+.btn-custom:active,
+.btn-custom:hover,
+.btn-custom:focus{
+    @include button-variant($shade-1-dark, $shade-1-dark, $shade-1-dark);
+}

@@ -23,11 +23,14 @@ app.use(sassMiddleware({
   indentedSyntax: false, // true = .sass and false = .scss
   sourceMap: true
 }));
+
 app.use(express.static(path.join(defaultPath, 'public')));
 app.use('/js', express.static(path.join(defaultPath, 'node_modules', 'bootstrap', 'dist', 'js'))); // redirect bootstrap JS
 app.use('/js', express.static(path.join(defaultPath, 'node_modules', 'jquery', 'dist'))); // redirect JS jQuery
 
+// Routes
 app.use('/', indexRouter);
+app.use('/results', indexRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

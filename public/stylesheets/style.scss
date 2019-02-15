@@ -1,1 +1,16 @@
 @import "node_modules/bootstrap/scss/bootstrap";
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+@import url('https://fonts.googleapis.com/css?family=Caveat');
+
+$background: #073B4C;
+$shade-1: #FFD166;
+$shade-1-dark: darken($shade-1, 20%);
+$shade-2: #EF476F;
+
+html, body {
+    height: 100%;
+}
+
+*{
+    font-family: 'Open Sans', sans-serif;
+}

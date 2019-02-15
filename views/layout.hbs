@@ -4,15 +4,24 @@
 <head>
   <title>{{title}}</title>
   <link rel='stylesheet' href='/stylesheets/style.css' />
+
+  {{#if index}}
+  <link rel="stylesheet" href="/stylesheets/index.css">
+  {{/if}}
+
 </head>
 
-<body>
-  <main class="container">
+<body class="container">
+
+  <main>
     {{{body}}}
   </main>
 
   <script src="/js/jquery.js"></script>
   <script src="/js/bootstrap.min.js"></script>
+  {{#if index}}
+  <script src="/javascripts/index.js"></script>
+  {{/if}}
 </body>
 
 </html>
