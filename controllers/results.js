@@ -11,8 +11,8 @@ const {
     getSearchProperty
 } = require('./utils/searching');
 
-let people = [];
-const results = true;
+let searchResults = [];
+const resultsPageIndicator = true;
 
 const capitalizeFirstLetter = (string) => {
     return string.charAt(0).toUpperCase() + string.slice(1);
@@ -45,13 +45,14 @@ exports.postResults = async (req, res, next) => {
     // Final request link
     const URL = `http://ws.audioscrobbler.com/2.0/${params}&limit=${limit}&format=json`;
 
-    const results = await axios.get(URL);
-    console.log('results length', results.data.results[searchProperty][searchType].length);
+    const JSONResults = await axios.get(URL);
 
-    people = [];
+    const resultsArray = JSONResults.data.results[searchProperty][searchType];
 
-    for (let index = 0; index < results.data.results[searchProperty][searchType].length; index++) {
-        const obj = results.data.results[searchProperty][searchType][index];
+    searchResults = [];
+
+    for (let index = 0; index < resultsArray.length; index++) {
+        const obj = resultsArray[index];
         const pushedObj = {
             name: obj.name,
             picture: obj.image[2]['#text']
@@ -60,19 +61,19 @@ exports.postResults = async (req, res, next) => {
         if (isEmpty(pushedObj.picture))
             continue;
 
-        if (pushedObj.name.includes(',') || pushedObj.name.includes('('), pushedObj.name.includes('&'))
+        if (pushedObj.name.includes(',') || pushedObj.name.includes('(') || pushedObj.name.includes(')') || pushedObj.name.includes('&') || pushedObj.name.includes(' and '))
             continue;
 
-        people.push(pushedObj);
+        searchResults.push(pushedObj);
     }
 
-    const count = capitalizeFirstLetter(converter.toWords(people.length));
+    const count = capitalizeFirstLetter(converter.toWords(searchResults.length));
 
     res.render('results', {
-        results,
-        people,
+        resultsPageIndicator,
+        searchResults,
         count,
-        noResults: people.length > 0 ? false : true,
+        noResults: searchResults.length > 0 ? false : true,
         URL
     });
 
