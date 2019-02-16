@@ -2,16 +2,27 @@
     <a href="/" class="title"><span>Fine</span><span>music</span></a>
 </div>
 
+{{#if noResults}}
+
+<div class="alert alert-danger" role="alert">
+    <h4 class="alert-heading">No Results!</h4>
+    <p>We have not found any match for the text you've entered.</p>
+    <hr>
+    <a class="mb-0" href="/">Head back to search page</a>
+</div>
+
+{{else}}
+
 <h2>{{count}} Results</h2>
 <div class="px-5">
     {{#each people}}
     <article class="row wow fadeIn" data-wow-delay="{{animationTime}}s">
 
-        <div class="col-md-3 img-container">
+        <div class="col-md-2 img-container">
             <img class="img-fluid" src="{{ picture }}" alt="{{ name }} image">
         </div>
 
-        <div class="col-md-9">
+        <div class="col-md-10">
             <div class="row info-container">
 
                 <div class="col-md-8 info">
@@ -33,4 +44,7 @@
 
     </article>
     {{/each}}
+
 </div>
+
+{{/if}}
