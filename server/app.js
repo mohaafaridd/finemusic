@@ -27,6 +27,8 @@ app.use(sassMiddleware({
 app.use(express.static(path.join(defaultPath, 'public')));
 app.use('/js', express.static(path.join(defaultPath, 'node_modules', 'bootstrap', 'dist', 'js'))); // redirect bootstrap JS
 app.use('/js', express.static(path.join(defaultPath, 'node_modules', 'jquery', 'dist'))); // redirect JS jQuery
+app.use('/js', express.static(path.join(defaultPath, 'node_modules', 'wowjs', 'dist'))); // redirect JS wowjs
+app.use('/css', express.static(path.join(defaultPath, 'node_modules', 'wowjs', 'css', 'libs'))); // redirect JS wowjs
 
 hbs.registerHelper('getCurrentYear', () => {
   return new Date().getFullYear();

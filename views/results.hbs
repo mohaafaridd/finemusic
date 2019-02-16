@@ -1,12 +1,14 @@
-<h1 class="title"><span>Fine</span><span>music</span></h1>
+<div class="text-center">
+    <a href="/" class="title"><span>Fine</span><span>music</span></a>
+</div>
 
-<h2>Results</h2>
+<h2>{{count}} Results</h2>
 <div>
     {{#each people}}
-    <article class="row">
+    <article class="row wow fadeIn" data-wow-delay="{{animationTime}}s">
 
         <div class="col-md-3 img-container">
-            <img class="img-fluid" src="{{ picture }}" alt="{{ picture }} image">
+            <img class="img-fluid" src="{{ picture }}" alt="{{ name }} image">
         </div>
 
         <div class="col-md-9">
@@ -18,10 +20,9 @@
                 </div>
 
                 <div class="col-md-4 songs-list">
-                    <h3>Top songs</h3>
+                    <h3>Top Songs</h3>
                     <ul class="list-group">
                         {{#songs}}
-                        {{!-- <li class="list-group-item"><a href="{{link}}">{{title}}</a></li> --}}
                         <a class="list-group-item" href="{{link}}">{{title}}</a>
                         {{/songs}}
                     </ul>
