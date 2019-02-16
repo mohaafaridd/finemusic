@@ -1,5 +1,4 @@
-const API = require('./../secret/api-key.json');
-const lastfm = API['lastfm'];
+const lastfm = process.env.LAST_FM;
 
 const errorMessage = 'Something did not go well, review your inputs'
 
