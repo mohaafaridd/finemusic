@@ -91,15 +91,40 @@ const getBio = async (value, method, type, artist) => {
         return bio;
 
     } catch (error) {
-        return 'Error Getting Data, yabn el mara'
+        return 'Error Getting Bio, Sorry.'
     }
 
 }
+
+const getTopSongs = async (type, method, value) => {
+    value = value.replace(/\s/g, "+");
+    let params = getParams(type, method, value);
+    const URL = getURL(params, 3);
+    const topSongsRequest = await axios(URL);
+    
+    try {
+        const topSongs = topSongsRequest.data.toptracks.track;
+        const topSongsArr = [];
+        topSongs.forEach(song => {
+            topSongsArr.push({
+                name: song.name,
+                url: song.url
+            });
+        });
+
+        console.log(topSongsArr);
+        return topSongsArr;    
+    } catch (error) {
+        return [];
+    }
+    
+};
 
 module.exports = {
     getSearchMethod,
     getParams,
     getURL,
     getSearchProperty,
-    getBio
+    getBio,
+    getTopSongs
 }

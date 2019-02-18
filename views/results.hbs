@@ -18,11 +18,11 @@
     {{#each searchResults}}
     <article class="row wow fadeIn" data-wow-delay="{{animationTime}}s">
 
-        <div class="col-md-2 img-container">
+        <div class="col-md-3 img-container">
             <img class="img-fluid" src="{{ picture }}" alt="{{ name }} image">
         </div>
 
-        <div class="col-md-10">
+        <div class="col-md-9">
             <div class="row info-container">
 
                 <div class="col-md-8 info">
@@ -34,7 +34,7 @@
                     <h3>Top Songs</h3>
                     <ul class="list-group">
                         {{#songs}}
-                        <a class="list-group-item" href="{{link}}">{{title}}</a>
+                        <a class="list-group-item" href="{{url}}">{{name}}</a>
                         {{/songs}}
                     </ul>
                 </div>

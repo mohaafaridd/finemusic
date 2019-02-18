@@ -10,7 +10,8 @@ const {
     getParams,
     getURL,
     getSearchProperty,
-    getBio
+    getBio,
+    getTopSongs
 } = require('./utils/searching');
 
 let searchResults = [];
@@ -63,7 +64,7 @@ exports.postResults = async (req, res, next) => {
 
         const pushedObj = {
             name: obj.name,
-            picture: obj.image[2]['#text']
+            picture: obj.image[3]['#text']
         }
 
         if (isEmpty(pushedObj.picture))
@@ -72,7 +73,8 @@ exports.postResults = async (req, res, next) => {
         if (pushedObj.name.includes(',') || pushedObj.name.includes('(') ||
             pushedObj.name.includes(')') || pushedObj.name.includes('&') ||
             pushedObj.name.includes(' and ') || pushedObj.name.includes('-') ||
-            pushedObj.name.includes('as'))
+            pushedObj.name.includes('as') || pushedObj.name.includes('feat') ||
+            pushedObj.name.includes('ft'))
             continue;
 
         if (searchType !== 'artist') {
@@ -80,6 +82,7 @@ exports.postResults = async (req, res, next) => {
             pushedObj['bio'] = await getBio(pushedObj.name, searchMethod[1], searchType, pushedObj['artist']);
         } else {
             pushedObj['bio'] = await getBio(pushedObj.name, searchMethod[1], searchType);
+            pushedObj['songs'] = await getTopSongs('artist', searchMethod[2], obj.name);
         }
 
         searchResults.push(pushedObj);
