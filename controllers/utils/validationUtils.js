@@ -10,7 +10,9 @@ const emptyString = (value) => {
 
 const notEnglishInput = (value) => {
 
-    return !isAlphanumeric(value);
+    var regexp = /[A-z\u00C0-\u00ff]+/g;
+
+    return !regexp.test(value);
 }
 
 const isValid = (value) => {
