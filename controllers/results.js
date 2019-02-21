@@ -1,9 +1,11 @@
 const converter = require('number-to-words');
-const validator = require('validator');
 const axios = require('axios');
 
+// Utils Imports
+const { isValid } = require('./utils/validationUtils');
+
 const {
-    isEmpty
+    isEmpty,
 } = require('validator');
 
 const {
@@ -35,13 +37,7 @@ exports.postResults = async (req, res, next) => {
     //TODO Validation
     //// 1 - Empty Text
     //// 2 - English Only 
-
-    if (isEmpty(searchValue)) {
-        res.redirect('/');
-    }
-
-    if(!validator.isAlphanumeric(searchValue)){
-        console.log(searchValue);
+    if(!isValid(searchValue)){
         res.redirect('/');
     }
 
