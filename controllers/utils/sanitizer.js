@@ -1,4 +1,5 @@
 const { getBio } = require('./requests/bio');
+const { getTopSongs } = require('./requests/topSongs');
 
 const getObject = async (object, type, method) => {
 
@@ -14,6 +15,7 @@ const getObject = async (object, type, method) => {
     if (type === 'artist') {
 
         model['bio'] = await getBio(type, method[1], model);
+        model['songs'] = await getTopSongs('artist', method[2], model);
 
     }
 

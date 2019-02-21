@@ -5,11 +5,8 @@ const { isValid, isRepeated } = require('./utils/validationUtils');
 const { search } = require('./utils/requests/search');
 const { getSearchMethod } = require('./utils/searching');
 const { getObject } = require('./utils/sanitizer');
+const { capitalizeFirstLetter } = require('./utils/general');
 const resultsPageIndicator = true;
-
-const capitalizeFirstLetter = (string) => {
-    return string.charAt(0).toUpperCase() + string.slice(1);
-}
 
 exports.postResults = async (req, res, next) => {
 
