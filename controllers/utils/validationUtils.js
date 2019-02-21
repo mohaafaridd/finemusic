@@ -1,6 +1,5 @@
 const {
     isEmpty,
-    isAlphanumeric,
     contains
 } = require('validator');
 
@@ -8,19 +7,15 @@ const emptyString = (value) => {
     return isEmpty(value);
 }
 
-const notEnglishInput = (value) => {
+/* const notEnglishInput = (value) => {
 
     var regexp = /[A-z\u00C0-\u00ff]+/g;
 
     return !regexp.test(value);
-}
+} */
 
 const isValid = (value) => {
     if (emptyString(value)) {
-        return false;
-    }
-
-    if (notEnglishInput(value)) {
         return false;
     }
 

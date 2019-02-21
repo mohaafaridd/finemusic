@@ -57,13 +57,15 @@ exports.postResults = async (req, res, next) => {
         searchResults.push(pushedObj); */
     }
 
-    const count = capitalizeFirstLetter(converter.toWords(searchResults.length));
+    const countInNumbers = output.length;
+    const count = capitalizeFirstLetter(converter.toWords(countInNumbers));
 
     res.render('results', {
         title: 'Search Results',
         resultsPageIndicator,
         searchResults: output,
         count,
+        countInNumbers,
         noResults: output.length > 0 ? false : true
     });
 
