@@ -1,10 +1,30 @@
-const getObject = (object) => {
+const { getBio } = require('./requests/bio');
 
-    return {
+const getObject = async (object, type, method) => {
+
+    const model = {
         name: object.name,
         image: getBestImage(object.image)
     }
 
+    if (!model.image) {
+        model.corrupt = true;
+    }
+
+    if (type === 'artist') {
+
+        model['bio'] = await getBio(type, method[1], model);
+
+    }
+
+    else {
+
+        model['artist'] = object.artist;
+        model['bio'] = await getBio(type, method[1], model, model['artist']);
+
+    }
+
+    return model
 }
 
 const getBestImage = (array) => {
@@ -15,6 +35,7 @@ const getBestImage = (array) => {
             image = element['#text'];
         }
     });
+
     return image;
 }
 

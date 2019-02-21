@@ -5,8 +5,6 @@ const { isValid, isRepeated } = require('./utils/validationUtils');
 const { search } = require('./utils/requests/search');
 const { getSearchMethod } = require('./utils/searching');
 const { getObject } = require('./utils/sanitizer');
-const { contains } = require('validator');
-
 const resultsPageIndicator = true;
 
 const capitalizeFirstLetter = (string) => {
@@ -19,10 +17,12 @@ exports.postResults = async (req, res, next) => {
 
     // artist, track or and album (Type)
     const type = req.body['search-type'];
+
     // specifices the proper API method to use (Method)
     const methods = getSearchMethod(type);
+
     // the user input -- with no spaces (Value)
-    const value = req.body['search-value'].replace(/\s/g, "+");
+    const value = encodeURIComponent(req.body['search-value']);
 
     // Input Validation
     if (!isValid(value)) {
@@ -33,23 +33,16 @@ exports.postResults = async (req, res, next) => {
 
     const output = [];
 
-
     for (let index = 0; index < searchResults.length; index++) {
-
-
-        // TODO
-        //// 1. Check if the name is repeated
-        //// 2. Get the sanitized object
-        //// 2.1 Get name
-        //// 2.2 Get best picture
-        //// 3. Push to output array
 
         if (isRepeated(output, searchResults[index].name)) {
             continue;
         }
 
-        const selected = getObject(searchResults[index]);
-        output.push(selected);
+        const selected = await getObject(searchResults[index], type, methods);
+
+        if (!selected.corrupt)
+            output.push(selected);
 
         /* if (type !== 'artist') {
             pushedObj['artist'] = obj.artist;

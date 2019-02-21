@@ -1,5 +1,4 @@
 const getTopSongs = async (type, method, value) => {
-    value = value.replace(/\s/g, "+");
     let params = getParams(type, method, value);
     const URL = getURL(params, 3);
     const topSongsRequest = await axios(URL);

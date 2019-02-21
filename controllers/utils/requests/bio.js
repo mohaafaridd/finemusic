@@ -1,5 +1,9 @@
-const getBio = async (type, method, value, artist) => {
-    value = value.replace(/\s/g, "+");
+const { getParams, getURL } = require('../URLGrabber');
+const axios = require('axios');
+
+const getBio = async (type, method, model, artist) => {
+
+    const value = encodeURIComponent(model.name);
 
     let params = getParams(type, method, value);
 
@@ -8,10 +12,12 @@ const getBio = async (type, method, value, artist) => {
     }
 
     const URL = getURL(params, 1);
+
     try {
         const results = await axios.get(URL);
 
         let bio;
+
         if (artist) {
             bio = results.data[`${type}`].wiki.summary;
         } else {
@@ -28,10 +34,18 @@ const getBio = async (type, method, value, artist) => {
             bio = bio.replace(bio.slice(startPosition), '');
         }
 
+        if (bio.length <= 10) {
+            model.corrupt = true;
+        }
+
         return bio;
 
     } catch (error) {
-        return 'Error Getting Bio, Sorry.'
+        console.log(error);
     }
 
+}
+
+module.exports = {
+    getBio
 }

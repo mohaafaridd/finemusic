@@ -9,6 +9,7 @@ const emptyString = (value) => {
 }
 
 const notEnglishInput = (value) => {
+
     return !isAlphanumeric(value);
 }
 
