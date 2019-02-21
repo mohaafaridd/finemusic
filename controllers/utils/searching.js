@@ -3,6 +3,13 @@ const axios = require('axios');
 
 const errorMessage = 'Something did not go well, review your inputs'
 
+/* Parameters Order */
+/* 1. Type */
+/* 2. Method */
+/* 3. Value */
+/* 4. Others */
+
+
 const getSearchMethod = (type) => {
     switch (type) {
         case 'artist':
@@ -17,6 +24,24 @@ const getSearchMethod = (type) => {
         default:
             throw new Error(errorMessage);
     }
+}
+
+const getSearchProperty = (value) => {
+
+    switch (value) {
+        case 'artist':
+            return 'artistmatches';
+
+        case 'track':
+            return 'trackmatches';
+
+        case 'album':
+            return 'albummatches';
+
+        default:
+            throw new Error(errorMessage)
+    }
+
 }
 
 const getParams = (type, method, value) => {
@@ -38,25 +63,7 @@ const getURL = (params, limit) => {
     return `http://ws.audioscrobbler.com/2.0/${params}&limit=${limit}&format=json`;
 }
 
-const getSearchProperty = (value) => {
-
-    switch (value) {
-        case 'artist':
-            return 'artistmatches';
-
-        case 'track':
-            return 'trackmatches';
-
-        case 'album':
-            return 'albummatches';
-
-        default:
-            throw new Error(errorMessage)
-    }
-
-}
-
-const getBio = async (value, method, type, artist) => {
+const getBio = async (type, method, value, artist) => {
     value = value.replace(/\s/g, "+");
     console.log(value);
 

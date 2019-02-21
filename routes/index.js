@@ -8,7 +8,8 @@ const router = express.Router();
 router.get('/', function (req, res, next) {
   const index = true;
   res.render('index', {
-    index
+    index,
+    title: 'Home'
   });
 });
 

@@ -1,4 +1,5 @@
 const converter = require('number-to-words');
+const validator = require('validator');
 const axios = require('axios');
 
 const {
@@ -25,13 +26,22 @@ exports.postResults = async (req, res, next) => {
 
     // artist, track or and album
     const searchType = req.body['search-type'];
-
     // specifices the proper API method to use
     const searchMethod = getSearchMethod(searchType);
-    // the user input
-    const searchValue = req.body['search-value'];
+    // the user input -- with no spaces
+    const searchValue = req.body['search-value'].replace(/\s/g, "+");
+
+
+    //TODO Validation
+    //// 1 - Empty Text
+    //// 2 - English Only 
 
     if (isEmpty(searchValue)) {
+        res.redirect('/');
+    }
+
+    if(!validator.isAlphanumeric(searchValue)){
+        console.log(searchValue);
         res.redirect('/');
     }
 
@@ -68,7 +78,24 @@ exports.postResults = async (req, res, next) => {
         }
 
         if (isEmpty(pushedObj.picture))
+        {
+            pushedObj.picture = obj.image[2]['#text'];
+        };
+
+        if (isEmpty(pushedObj.picture))
+        {
+            pushedObj.picture = obj.image[1]['#text'];
+        };
+
+        if (isEmpty(pushedObj.picture))
+        {
+            pushedObj.picture = obj.image[0]['#text'];
+        };
+
+        if (isEmpty(pushedObj.picture))
+        {
             continue;
+        };
 
         if (pushedObj.name.includes(',') || pushedObj.name.includes('(') ||
             pushedObj.name.includes(')') || pushedObj.name.includes('&') ||
@@ -79,9 +106,9 @@ exports.postResults = async (req, res, next) => {
 
         if (searchType !== 'artist') {
             pushedObj['artist'] = obj.artist;
-            pushedObj['bio'] = await getBio(pushedObj.name, searchMethod[1], searchType, pushedObj['artist']);
+            pushedObj['bio'] = await getBio(searchType, searchMethod[1], pushedObj.name, pushedObj['artist']);
         } else {
-            pushedObj['bio'] = await getBio(pushedObj.name, searchMethod[1], searchType);
+            pushedObj['bio'] = await getBio(searchType, searchMethod[1], pushedObj.name);
             pushedObj['songs'] = await getTopSongs('artist', searchMethod[2], obj.name);
         }
 
@@ -91,6 +118,7 @@ exports.postResults = async (req, res, next) => {
     const count = capitalizeFirstLetter(converter.toWords(searchResults.length));
 
     res.render('results', {
+        title: 'Search Results',
         resultsPageIndicator,
         searchResults,
         count,
