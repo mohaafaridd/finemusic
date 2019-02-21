@@ -26,17 +26,16 @@ const capitalizeFirstLetter = (string) => {
 
 exports.postResults = async (req, res, next) => {
 
-    // artist, track or and album
+    // Inputs
+
+    // artist, track or and album (Type)
     const searchType = req.body['search-type'];
-    // specifices the proper API method to use
+    // specifices the proper API method to use (Method)
     const searchMethod = getSearchMethod(searchType);
-    // the user input -- with no spaces
+    // the user input -- with no spaces (Value)
     const searchValue = req.body['search-value'].replace(/\s/g, "+");
 
-
-    //TODO Validation
-    //// 1 - Empty Text
-    //// 2 - English Only 
+    // Input Validation
     if(!isValid(searchValue)){
         res.redirect('/');
     }
