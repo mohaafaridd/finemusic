@@ -1,6 +1,5 @@
 const getBio = async (type, method, value, artist) => {
     value = value.replace(/\s/g, "+");
-    console.log(value);
 
     let params = getParams(type, method, value);
 
@@ -13,7 +12,6 @@ const getBio = async (type, method, value, artist) => {
         const results = await axios.get(URL);
 
         let bio;
-        //console.log(URL);
         if (artist) {
             bio = results.data[`${type}`].wiki.summary;
         } else {

@@ -9,9 +9,6 @@ const getParams = (type, method, value) => {
         case 'track':
         case 'album':
             return `?method=${method}&${type}=${value}&api_key=${lastfm}`;
-
-        default:
-            throw new Error(errorMessage);
     }
 }
 

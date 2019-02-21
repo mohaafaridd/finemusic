@@ -17,7 +17,6 @@ const search = async (type, method, value) => {
     // Final request link
     const URL = getURL(params, limit);
 
-    console.log(URL);
     const JSONResults = await axios.get(URL);
 
     const results = JSONResults.data.results[searchProperty][type];

@@ -1,11 +1,11 @@
 const converter = require('number-to-words');
 
 // Utils Imports
-const { isValid } = require('./utils/validationUtils');
+const { isValid, isRepeated } = require('./utils/validationUtils');
 const { search } = require('./utils/requests/search');
-const { isEmpty } = require('validator');
-
 const { getSearchMethod } = require('./utils/searching');
+const { getObject } = require('./utils/sanitizer');
+const { contains } = require('validator');
 
 const resultsPageIndicator = true;
 
@@ -30,6 +30,7 @@ exports.postResults = async (req, res, next) => {
     }
 
     const searchResults = await search(type, methods[0], value);
+
     const output = [];
 
 
@@ -37,21 +38,17 @@ exports.postResults = async (req, res, next) => {
 
 
         // TODO
-        // 2. Check if the name is repeated
-        // 1. Get the sanitized object
-        // 1.1 Get name
-        // 1.2 Get best picture
-        // 3. Push to output array
+        //// 1. Check if the name is repeated
+        //// 2. Get the sanitized object
+        //// 2.1 Get name
+        //// 2.2 Get best picture
+        //// 3. Push to output array
 
-        // TODO | This has to be added to validation utils to check if the name is part of any other results string (results array, selected object name property)
         if (isRepeated(output, searchResults[index].name)) {
             continue;
         }
 
-        // TODO | This has to be added to a file which sanitizes the results object
         const selected = getObject(searchResults[index]);
-
-        // TODO | Push object to the results array
         output.push(selected);
 
         /* if (type !== 'artist') {

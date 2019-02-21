@@ -3,7 +3,7 @@ const getTopSongs = async (type, method, value) => {
     let params = getParams(type, method, value);
     const URL = getURL(params, 3);
     const topSongsRequest = await axios(URL);
-    
+
     try {
         const topSongs = topSongsRequest.data.toptracks.track;
         const topSongsArr = [];
@@ -14,10 +14,9 @@ const getTopSongs = async (type, method, value) => {
             });
         });
 
-        console.log(topSongsArr);
-        return topSongsArr;    
+        return topSongsArr;
     } catch (error) {
         return [];
     }
-    
+
 };

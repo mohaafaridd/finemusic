@@ -1,6 +1,7 @@
 const {
     isEmpty,
-    isAlphanumeric
+    isAlphanumeric,
+    contains
 } = require('validator');
 
 const emptyString = (value) => {
@@ -12,11 +13,11 @@ const notEnglishInput = (value) => {
 }
 
 const isValid = (value) => {
-    if(emptyString(value)){
+    if (emptyString(value)) {
         return false;
     }
-    
-    if(notEnglishInput(value)){
+
+    if (notEnglishInput(value)) {
         return false;
     }
 
@@ -24,6 +25,24 @@ const isValid = (value) => {
     return true;
 }
 
+/* Used to check for if name is repeated in array */
+const isRepeated = (array, string) => {
+
+    if (array.length > 0) {
+
+        for (let index = 0; index < array.length; index++) {
+            const element = array[index];
+
+            if (contains(string, element.name))
+                return true;
+        }
+
+    }
+
+    return false;
+}
+
 module.exports = {
-    isValid
+    isValid,
+    isRepeated
 };
