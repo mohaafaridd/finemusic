@@ -1,23 +1,12 @@
 const converter = require('number-to-words');
-const axios = require('axios');
 
 // Utils Imports
 const { isValid } = require('./utils/validationUtils');
+const { search } = require('./utils/requests/search');
+const { isEmpty } = require('validator');
 
-const {
-    isEmpty,
-} = require('validator');
+const { getSearchMethod } = require('./utils/searching');
 
-const {
-    getSearchMethod,
-    getParams,
-    getURL,
-    getSearchProperty,
-    getBio,
-    getTopSongs
-} = require('./utils/searching');
-
-let searchResults = [];
 const resultsPageIndicator = true;
 
 const capitalizeFirstLetter = (string) => {
@@ -29,85 +18,53 @@ exports.postResults = async (req, res, next) => {
     // Inputs
 
     // artist, track or and album (Type)
-    const searchType = req.body['search-type'];
+    const type = req.body['search-type'];
     // specifices the proper API method to use (Method)
-    const searchMethod = getSearchMethod(searchType);
+    const methods = getSearchMethod(type);
     // the user input -- with no spaces (Value)
-    const searchValue = req.body['search-value'].replace(/\s/g, "+");
+    const value = req.body['search-value'].replace(/\s/g, "+");
 
     // Input Validation
-    if(!isValid(searchValue)){
+    if (!isValid(value)) {
         res.redirect('/');
     }
 
-    // API's component that carries the data
-    const searchProperty = getSearchProperty(searchType);
+    const searchResults = await search(type, methods[0], value);
+    const output = [];
 
-    // List of used params in API specification
-    const params = getParams(searchType, searchMethod[0], searchValue);
 
-    // Search Limit Results
-    const limit = 10;
+    for (let index = 0; index < searchResults.length; index++) {
 
-    // Final request link
-    const searchAPIMethod = getURL(params, limit);
 
-    const searchJSONResults = await axios.get(searchAPIMethod);
+        // TODO
+        // 2. Check if the name is repeated
+        // 1. Get the sanitized object
+        // 1.1 Get name
+        // 1.2 Get best picture
+        // 3. Push to output array
 
-    const searchResultsArray = searchJSONResults.data.results[searchProperty][searchType];
-
-    searchResults = [];
-
-    let exact = 0;
-
-    for (let index = 0; index < searchResultsArray.length; index++) {
-        const obj = searchResultsArray[index];
-
-        if (searchResults.filter(e => e.name === obj.name).length > 0) {
+        // TODO | This has to be added to validation utils to check if the name is part of any other results string (results array, selected object name property)
+        if (isRepeated(output, searchResults[index].name)) {
             continue;
         }
 
-        const pushedObj = {
-            name: obj.name,
-            picture: obj.image[3]['#text']
-        }
+        // TODO | This has to be added to a file which sanitizes the results object
+        const selected = getObject(searchResults[index]);
 
-        if (isEmpty(pushedObj.picture))
-        {
-            pushedObj.picture = obj.image[2]['#text'];
-        };
+        // TODO | Push object to the results array
+        output.push(selected);
 
-        if (isEmpty(pushedObj.picture))
-        {
-            pushedObj.picture = obj.image[1]['#text'];
-        };
-
-        if (isEmpty(pushedObj.picture))
-        {
-            pushedObj.picture = obj.image[0]['#text'];
-        };
-
-        if (isEmpty(pushedObj.picture))
-        {
-            continue;
-        };
-
-        if (pushedObj.name.includes(',') || pushedObj.name.includes('(') ||
-            pushedObj.name.includes(')') || pushedObj.name.includes('&') ||
-            pushedObj.name.includes(' and ') || pushedObj.name.includes('-') ||
-            pushedObj.name.includes('as') || pushedObj.name.includes('feat') ||
-            pushedObj.name.includes('ft'))
-            continue;
-
-        if (searchType !== 'artist') {
+        /* if (type !== 'artist') {
             pushedObj['artist'] = obj.artist;
-            pushedObj['bio'] = await getBio(searchType, searchMethod[1], pushedObj.name, pushedObj['artist']);
+            pushedObj['bio'] = await getBio(type, methods[1], pushedObj.name, pushedObj['artist']);
         } else {
-            pushedObj['bio'] = await getBio(searchType, searchMethod[1], pushedObj.name);
-            pushedObj['songs'] = await getTopSongs('artist', searchMethod[2], obj.name);
-        }
+            pushedObj['bio'] = await getBio(type, methods[1], pushedObj.name);
+            pushedObj['songs'] = await getTopSongs('artist', methods[2], obj.name);
+        } */
 
-        searchResults.push(pushedObj);
+        /* searchResults.map(e => e.name !== obj.name);
+
+        searchResults.push(pushedObj); */
     }
 
     const count = capitalizeFirstLetter(converter.toWords(searchResults.length));
@@ -115,9 +72,9 @@ exports.postResults = async (req, res, next) => {
     res.render('results', {
         title: 'Search Results',
         resultsPageIndicator,
-        searchResults,
+        searchResults: output,
         count,
-        noResults: searchResults.length > 0 ? false : true
+        noResults: output.length > 0 ? false : true
     });
 
 }
