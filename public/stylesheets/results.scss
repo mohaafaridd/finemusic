@@ -51,3 +51,7 @@ article {
         color: $shade-1;
     }
 }
+
+article:nth-of-type( 1 ){
+    background-color: white;
+}
