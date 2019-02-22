@@ -13,19 +13,22 @@
 
 {{else}}
 
-<h2>{{count}} Results</h2>
+<h2>{{count}} Results {{topSongsIndicator}}</h2>
+
 <div class="px-5">
-    {{#each searchResults}}
+    {{#each output}}
     <article class="row wow fadeIn" data-wow-delay="{{animationTime}}s">
+
 
         <div class="col-md-3 img-container">
             <img class="img-fluid" src="{{ image }}" alt="{{ name }} image">
         </div>
 
+
         <div class="col-md-9">
             <div class="row info-container">
 
-                <div class="col-md-8 info">
+                <div class="col-md info">
                     <h2>{{ name }}</h2>
                     <p>{{bio}}</p>
                 </div>
@@ -41,6 +44,8 @@
 
             </div>
         </div>
+
+
 
     </article>
     {{/each}}

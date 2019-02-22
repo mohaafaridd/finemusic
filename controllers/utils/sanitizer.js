@@ -1,5 +1,6 @@
 const { getBio } = require('./requests/bio');
 const { getTopSongs } = require('./requests/topSongs');
+const { isRepeated } = require('./validationUtils');
 
 const getObject = async (object, type, method) => {
 
@@ -41,6 +42,26 @@ const getBestImage = (array) => {
     return image;
 }
 
+const getOutput = async (input, type, methods) => {
+
+    const output = [];
+
+    for (let index = 0; index < input.length; index++) {
+
+        if (isRepeated(output, input[index].name)) {
+            continue;
+        }
+
+        const selected = await getObject(input[index], type, methods);
+
+        if (!selected.corrupt)
+            output.push(selected);
+
+    }
+
+    return output;
+}
+
 module.exports = {
-    getObject
+    getOutput
 }
