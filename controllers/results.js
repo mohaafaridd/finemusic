@@ -6,7 +6,6 @@ const { getSearchMethod } = require('./utils/searching');
 const { getOutput } = require('./utils/sanitizer');
 const { getCount } = require('./utils/general');
 const resultsPageIndicator = true;
-
 exports.postResults = async (req, res, next) => {
 
     // Inputs
@@ -36,7 +35,7 @@ exports.postResults = async (req, res, next) => {
         resultsPageIndicator,
         output,
         count,
-        noResults: output.length > 0 ? false : true
+        noResults: output.length > 0 ? false : true,
     });
 
 }

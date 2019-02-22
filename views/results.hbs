@@ -24,7 +24,7 @@
             <img class="img-fluid" src="{{ image }}" alt="{{ name }} image">
         </div>
 
-
+        {{#if isArtist}}
         <div class="col-md-9">
             <div class="row info-container">
 
@@ -44,7 +44,20 @@
 
             </div>
         </div>
+        {{else}}
+        <div class="col-md-9">
 
+            <div class="row info-container">
+
+                <div class="col-md info">
+                    <h2>{{ name }}</h2>
+                    <p>{{bio}}</p>
+                </div>
+
+            </div>
+
+        </div>
+        {{/if}}
 
 
     </article>

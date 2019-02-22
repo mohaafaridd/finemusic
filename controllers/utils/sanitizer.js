@@ -48,11 +48,16 @@ const getOutput = async (input, type, methods) => {
 
     for (let index = 0; index < input.length; index++) {
 
+
         if (isRepeated(output, input[index].name)) {
             continue;
         }
 
         const selected = await getObject(input[index], type, methods);
+
+        const isArtist = type === 'artist' ? true : false;
+
+        selected['isArtist'] = isArtist;
 
         if (!selected.corrupt)
             output.push(selected);
