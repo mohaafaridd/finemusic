@@ -1,11 +1,10 @@
-const converter = require('number-to-words');
 
 // Utils Imports
 const { isValid } = require('./utils/validationUtils');
 const { search } = require('./utils/requests/search');
 const { getSearchMethod } = require('./utils/searching');
 const { getOutput } = require('./utils/sanitizer');
-const { capitalizeFirstLetter } = require('./utils/general');
+const { getCount } = require('./utils/general');
 const resultsPageIndicator = true;
 
 exports.postResults = async (req, res, next) => {
@@ -30,15 +29,13 @@ exports.postResults = async (req, res, next) => {
 
     const output = await getOutput(searchResults, type, methods);
 
-    const countInNumbers = output.length;
-    const count = capitalizeFirstLetter(converter.toWords(countInNumbers));
+    const count = getCount(output.length);
 
     res.render('results', {
         title: 'Search Results',
         resultsPageIndicator,
         output,
         count,
-        countInNumbers,
         noResults: output.length > 0 ? false : true
     });
 
