@@ -52,6 +52,9 @@
                 <div class="col-md info">
                     <h2>{{ name }}</h2>
                     <p>{{bio}}</p>
+                    {{#if url}}
+                    <a href="{{url}}" class="btn btn-info" target="_blank" rel="noopener noreferrer">Listen</a>
+                    {{/if}}
                 </div>
 
             </div>

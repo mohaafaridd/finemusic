@@ -23,6 +23,7 @@ const getObject = async (object, type, method) => {
     else {
 
         model['artist'] = object.artist;
+        model['url'] = object.url;
         model['bio'] = await getBio(type, method[1], model, model['artist']);
 
     }
