@@ -1,73 +1,68 @@
+const { isEmpty } = require('validator');
 const { getBio } = require('./requests/bio');
 const { getTopSongs } = require('./requests/topSongs');
 const { isRepeated } = require('./validationUtils');
 
-const getObject = async (object, type, method) => {
-
-    const model = {
-        name: object.name,
-        image: getBestImage(object.image)
-    }
-
-    if (!model.image) {
-        model.corrupt = true;
-    }
-
-    if (type === 'artist') {
-
-        model['bio'] = await getBio(type, method[1], model);
-        model['songs'] = await getTopSongs('artist', method[2], model);
-
-    }
-
-    else {
-
-        model['artist'] = object.artist;
-        model['url'] = object.url;
-        model['bio'] = await getBio(type, method[1], model, model['artist']);
-
-    }
-
-    return model
-}
-
 const getBestImage = (array) => {
-    array = array.reverse();
-    let image;
-    array.forEach(element => {
-        if (!image) {
-            image = element['#text'];
-        }
-    });
+  const reversedArray = array.reverse();
+  let image = '';
 
-    return image;
-}
+  reversedArray.forEach((element) => {
+    if (isEmpty(image)) {
+      image = element['#text'];
+    }
+  });
+
+  return image;
+};
+
+const getObject = async (object, type, method) => {
+  const model = {
+    name: object.name,
+    image: await getBestImage(object.image),
+    get corrupt() { return isEmpty(this.image); },
+  };
+
+  console.log(model.corrupt);
+
+  if (type === 'artist') {
+    model.bio = await getBio(type, method[1], model);
+    model.songs = await getTopSongs('artist', method[2], model);
+  } else {
+    model.artist = object.artist;
+    model.url = object.url;
+    model.bio = await getBio(type, method[1], model, model.artist);
+  }
+
+  return model;
+};
+
 
 const getOutput = async (input, type, methods) => {
+  const output = [];
 
-    const output = [];
+  const setArray = [...new Set(input)];
 
-    for (let index = 0; index < input.length; index++) {
+  // TODO: Filter those duplicates in inputs!
 
+  // I don't really understand this to the fullest.
+  await Promise.all(setArray.map(async (selected) => {
+    if (await !isRepeated(output, selected.name)) {
+      const obj = await getObject(selected, type, methods);
 
-        if (isRepeated(output, input[index].name)) {
-            continue;
-        }
+      const isArtist = type === 'artist';
 
-        const selected = await getObject(input[index], type, methods);
+      obj.isArtist = isArtist;
 
-        const isArtist = type === 'artist' ? true : false;
-
-        selected['isArtist'] = isArtist;
-
-        if (!selected.corrupt)
-            output.push(selected);
-
+      if (obj.corrupt === false) {
+        output.push(obj);
+      }
     }
+  }));
 
-    return output;
-}
+  return output;
+};
 
 module.exports = {
-    getOutput
-}
+  getOutput,
+};

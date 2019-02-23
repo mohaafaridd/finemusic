@@ -5,11 +5,11 @@ const resultsContoller = require('../controllers/results');
 const router = express.Router();
 
 /* GET home page. */
-router.get('/', function (req, res, next) {
+router.get('/', (req, res) => {
   const index = true;
   res.render('index', {
     index,
-    title: 'Home'
+    title: 'Home',
   });
 });
 
