@@ -32,10 +32,6 @@ const getBio = async (type, method, model, artist) => {
       bio = bio.replace(bio.slice(startPosition), '');
     }
 
-    if (bio.trim().length <= 10) {
-      model.corrupt(true);
-    }
-
     return bio;
   } catch (error) {
     return new Error('Your request cannot be done');
