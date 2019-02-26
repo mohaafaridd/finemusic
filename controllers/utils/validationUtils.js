@@ -20,7 +20,7 @@ const isRepeated = (array, string) => {
     for (let index = 0; index < array.length; index += 1) {
       const element = array[index];
 
-      if (contains(string, element.name)) {
+      if (contains(string.toLowerCase(), element.name.toLowerCase())) {
         return true;
       }
     }
