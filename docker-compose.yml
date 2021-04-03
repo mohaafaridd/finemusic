@@ -1,0 +1,14 @@
+version: "3.8"
+
+services:
+  finemusic:
+    restart: always
+    container_name: finemusic
+    build:
+      context: ./
+    command: npm run start:prod
+    volumes:
+      - ./:/app
+      - /app/node_modules
+    ports:
+      - "3001:3000"
