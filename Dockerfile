@@ -22,6 +22,4 @@ RUN rm -rf ./dist
 
 ENV NODE_ENV=production
 
-RUN npm run build
-
 CMD ["npm","start"]
