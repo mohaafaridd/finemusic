@@ -13,8 +13,11 @@ router.get('/', (req, res) => {
   });
 });
 
-
 /* POST request to API */
-router.post('/results', resultsContoller.postResults);
+router.get('/results', resultsContoller.getResults);
+
+router.get('*', (req, res) => {
+  res.redirect('/');
+});
 
 module.exports = router;

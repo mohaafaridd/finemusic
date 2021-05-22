@@ -11,7 +11,8 @@ const getParams = (type, method, value) => {
   }
 };
 
-const getURL = (params, limit) => `http://ws.audioscrobbler.com/2.0/${params}&limit=${limit}&format=json`;
+const getURL = (params, limit) =>
+  `https://ws.audioscrobbler.com/2.0/${params}&limit=${limit}&format=json`;
 
 module.exports = {
   getParams,

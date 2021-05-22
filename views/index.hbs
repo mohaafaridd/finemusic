@@ -1,23 +1,33 @@
-<h1 class="title"><span>Fine</span><span>music</span></h1>
+<h1 class='title'><span>Fine</span><span>music</span></h1>
 
-<form action="/results" method="post">
-    <div class="form-row py-1 my-1">
-        <div class="col-md-10 my-1">
-            <input type="text" class="form-control" id="search-value" name="search-value" placeholder="Ariana Grande">
-        </div>
-        <div class="col-md-2 my-1">
-            <select name="search-type" class="custom-select" id="search-type">
-                <option value="artist" selected>Artist</option>
-                <option value="track">Track</option>
-                <option value="album">Album</option>
-            </select>
-        </div>
+<form action='/results' method='get'>
+  <div class='form-row py-1 my-1'>
+    <div class='col-md-10 my-1'>
+      <input
+        type='text'
+        class='form-control'
+        id='search-value'
+        name='search-value'
+        placeholder='Ariana Grande'
+      />
     </div>
+    <div class='col-md-2 my-1'>
+      <select name='search-type' class='custom-select' id='search-type'>
+        <option value='artist' selected>Artist</option>
+        <option value='track'>Track</option>
+        <option value='album'>Album</option>
+      </select>
+    </div>
+  </div>
 
-    <div class="form-row">
-        <div class="col-md-10"></div>
-        <div class="col-md-2 btn-container">
-            <button id="search-btn" type="submit" class="btn btn-custom">Rockit</button>
-        </div>
+  <div class='form-row'>
+    <div class='col-md-10'></div>
+    <div class='col-md-2 btn-container'>
+      <button
+        id='search-btn'
+        type='submit'
+        class='btn btn-custom'
+      >Rockit</button>
     </div>
+  </div>
 </form>

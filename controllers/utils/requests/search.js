@@ -3,7 +3,6 @@ const axios = require('axios');
 const { getParams, getURL } = require('./../URLGrabber');
 const { getSearchProperty } = require('./../searching');
 
-
 const search = async (type, method, value) => {
   // API's component that carries the data
   const searchProperty = getSearchProperty(type);

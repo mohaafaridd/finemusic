@@ -1,9 +1,6 @@
-const {
-  isEmpty,
-  contains,
-} = require('validator');
+const { isEmpty, contains } = require('validator');
 
-const emptyString = value => isEmpty(value);
+const emptyString = (value) => isEmpty(value);
 
 const isValid = (value) => {
   if (emptyString(value)) {
