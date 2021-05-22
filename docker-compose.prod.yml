@@ -7,4 +7,4 @@ services:
       context: ./
       target: production
     ports:
-      - "3001:3001"
+      - "3002:3000"
