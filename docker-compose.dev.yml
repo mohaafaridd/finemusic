@@ -1,7 +1,8 @@
-version: "3.5"
+version: '3.5'
 services:
   app:
     restart: always
+    image: finemusic
     container_name: finemusic
     build:
       context: ./
@@ -11,4 +12,4 @@ services:
       - ./:/app
       - /app/node_modules
     ports:
-      - "3002:3000"
+      - '3002:3000'
