@@ -3,11 +3,7 @@ const getSearchMethod = (type) => {
     case 'artist':
     case 'track':
     case 'album':
-      return [
-        `${type}.search`,
-        `${type}.getInfo`,
-        `${type}.getTopTracks`,
-      ];
+      return [`${type}.search`, `${type}.getInfo`, `${type}.getTopTracks`];
     default:
       return new Error('Invalid Method');
   }

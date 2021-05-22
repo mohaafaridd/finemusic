@@ -20,7 +20,9 @@ const getObject = async (object, type, method) => {
     id: object.id,
     name: object.name,
     image: await getBestImage(object.image),
-    get corrupt() { return isEmpty(this.image); },
+    get corrupt() {
+      return isEmpty(this.image);
+    },
     listeners: object.listeners,
   };
 
@@ -36,7 +38,6 @@ const getObject = async (object, type, method) => {
   if (model.bio === 'Your request cannot be done') {
     model.corrupt = true;
   }
-
 
   return model;
 };
